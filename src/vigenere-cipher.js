@@ -20,13 +20,36 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor (type = true) {
+    this.type = type;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(str, key) {
+    if (!str || !key) throw new Error ('Incorrect arguments!')
+    str = str.toUpperCase();
+    key = key.toUpperCase();
+    let alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    while (key.length < str.length) {
+      key += key;
+    }
+    let j = 0;
+    str = str.split('')
+              .map( a => alph.includes(a) ? alph[(alph.indexOf(a) + alph.indexOf(key[j++])) % alph.length] : a)
+              .join('');
+    return this.type ? str : str.split('').reverse().join('');
+  }
+  decrypt(str, key) {
+    if (!str || !key) throw new Error ('Incorrect arguments!')
+    str = str.toUpperCase();
+    key = key.toUpperCase();
+    let alph = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    while (key.length < str.length) {
+      key += key;
+    }
+    let j = 0;
+    str = str.split('')
+              .map( a => alph.includes(a) ? alph.substr((alph.indexOf(a) - alph.indexOf(key[j++])) % alph.length, 1) : a)
+              .join('');
+    return this.type ? str : str.split('').reverse().join('');
   }
 }
 
