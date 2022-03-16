@@ -18,6 +18,8 @@ function countCats(arr) {
   let k = 0;
   arr.forEach(a => a.forEach(b => b == '^^' ? k++ : k));
   return k;
+  
+  //return arr.flat().reduce( (sum, n) => n == '^^' ? ++sum : sum, 0);
 }
 
 module.exports = {
